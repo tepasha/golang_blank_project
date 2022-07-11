@@ -16,9 +16,9 @@ import (
 	"github.com/tepasha/golang_blank_project/internal/service"
 )
 
-// @title        Pet's Medical Card API
-// @version      1.0
-// @description  API Server for Pet's Medical Card
+// @title        Simple REST API Server
+// @version      0.1
+// @description  Simple REST API Server
 
 // @host      localhost:8080
 // @BasePath  /

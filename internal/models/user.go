@@ -15,7 +15,7 @@ type (
 	User struct {
 		Id        int64      `json:"-" db:"id"`
 		Email     string     `json:"email" db:"email" binding:"required"`
-		Login     string     `json:"login" db:"ulogin" binding:"required"`
+		Login     string     `json:"login" db:"login_user" binding:"required"`
 		Phone     string     `json:"phone" db:"phone"`
 		License   string     `json:"license" db:"license"`
 		PassWord  string     `json:"pass" db:"pass" binding:"required"`
@@ -27,7 +27,7 @@ type (
 
 	UpdateUserInput struct {
 		Email     string     `json:"email"`
-		Login     string     `json:"login"`
+		Login     string     `json:"login" db:"login_user"`
 		PassWord  string     `json:"pass"`
 		About     string     `json:"about"`
 		AvatarSrc FileStruct `json:"avatar" db:"-"`
