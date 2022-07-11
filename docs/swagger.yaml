@@ -1,0 +1,207 @@
+basePath: /
+definitions:
+  handler.errorResponse:
+    properties:
+      message:
+        type: string
+    type: object
+  handler.getUserToken:
+    properties:
+      token:
+        type: string
+    type: object
+  handler.singInInput:
+    properties:
+      login:
+        type: string
+      pass:
+        type: string
+    required:
+    - login
+    - pass
+    type: object
+  handler.statusResponse:
+    properties:
+      status:
+        type: string
+    type: object
+  models.FileStruct:
+    properties:
+      data:
+        type: string
+      mime:
+        type: string
+    type: object
+  models.UpdateUserInput:
+    properties:
+      about:
+        type: string
+      avatar:
+        $ref: '#/definitions/models.FileStruct'
+      birthday:
+        type: string
+      email:
+        type: string
+      login:
+        type: string
+      pass:
+        type: string
+    type: object
+  models.User:
+    properties:
+      about:
+        type: string
+      avatar:
+        $ref: '#/definitions/models.FileStruct'
+      birthday:
+        type: string
+      email:
+        type: string
+      license:
+        type: string
+      login:
+        type: string
+      pass:
+        type: string
+      phone:
+        type: string
+    required:
+    - email
+    - login
+    - pass
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API Server for Pet's Medical Card
+  title: Pet's Medical Card API
+  version: "1.0"
+paths:
+  /api/auth/sing-in:
+    post:
+      consumes:
+      - application/json
+      description: login
+      operationId: login
+      parameters:
+      - description: credentials
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/handler.singInInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.getUserToken'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: SignIn
+      tags:
+      - auth
+  /api/auth/sing-up:
+    post:
+      consumes:
+      - application/json
+      description: Create account
+      operationId: create-account
+      parameters:
+      - description: account info
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: SignUp
+      tags:
+      - auth
+  /api/usersettings/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Update user
+      operationId: update-user
+      parameters:
+      - description: Update user
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Update user
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.UpdateUserInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.statusResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+        default:
+          description: ""
+          schema:
+            $ref: '#/definitions/handler.errorResponse'
+      summary: Update user
+      tags:
+      - auth
+securityDefinitions:
+  ApiAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
