@@ -1,0 +1,1 @@
+# golang_blank_project
